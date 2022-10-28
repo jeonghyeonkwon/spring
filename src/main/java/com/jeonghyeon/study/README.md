@@ -73,19 +73,21 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-public class WebApplication implements WebApplicationInitializer {
+public class WebApplication
+        implements WebApplicationInitializer
+{
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.setServletContext(servletContext);
         context.register(WebConfig.class);
         context.refresh();
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
         ServletRegistration.Dynamic app = servletContext.addServlet("app", dispatcherServlet);
-        app.addMapping("/app/*")
+        app.addMapping("/app/*");
     }
 }
-
 ```
 
 ```xml
@@ -120,5 +122,21 @@ public class WebApplication implements WebApplicationInitializer {
 * 스프링 부트
   * 스프링 부트 어플리케이션 안에 톰캣을 넣은 구조 (임베디드 톰캣)
 
+## @EnableWebMvc 와 WebMvcConfigurer
+* 애노테이션 기반 스프링 MVC를 사용할 때 편리한 웹 MVC 기본 설정
+  * 인터셉터나 메시지 컨버터 같은 것을 추가하기 쉬워진다.
+* 확장할려면 WebMvcConfigurer인터페이스를 이용하여 확장하면 된다.
+```java
+@Configuration
+@ComponentScan
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.jsp("/WEB-INF/",".jsp");
+    }
+}
+```
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
