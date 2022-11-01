@@ -9,11 +9,11 @@
 <!--    </context-param>-->
 <!--    <context-param>-->
 <!--        <param-name>contextConfigLocation</param-name>-->
-<!--        <param-value>com.jeonghyeon.study.AppConfig</param-value>-->
+<!--        <param-value>com.jeonghyeon.study.spring5.AppConfig</param-value>-->
 <!--    </context-param>-->
 <!--    <filter>-->
 <!--        <filter-name>myFilter</filter-name>-->
-<!--        <filter-class>com.jeonghyeon.study.MyFilter</filter-class>-->
+<!--        <filter-class>com.jeonghyeon.study.spring5.MyFilter</filter-class>-->
 <!--    </filter>-->
 <!--    <filter-mapping>-->
 <!--        <filter-name>myFilter</filter-name>-->
@@ -31,7 +31,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.jeonghyeon.study.WebConfig</param-value>
+            <param-value>com.jeonghyeon.study.spring5.WebConfig</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
@@ -40,7 +40,7 @@
     </servlet-mapping>
 <!--    <servlet>-->
 <!--        <servlet-name>hello</servlet-name>-->
-<!--        <servlet-class>com.jeonghyeon.study.HelloServlet</servlet-class>-->
+<!--        <servlet-class>com.jeonghyeon.study.spring5.HelloServlet</servlet-class>-->
 <!--    </servlet>-->
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>hello</servlet-name>-->

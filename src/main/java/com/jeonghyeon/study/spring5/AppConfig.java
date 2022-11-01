@@ -1,4 +1,4 @@
-package com.jeonghyeon.study;
+package com.jeonghyeon.study.spring5;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

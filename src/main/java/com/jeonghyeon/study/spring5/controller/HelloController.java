@@ -1,10 +1,8 @@
-package com.jeonghyeon.study;
-
+import com.jeonghyeon.study.spring5.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class HelloController {
@@ -19,6 +17,6 @@ public class HelloController {
 
     @GetMapping("/sample")
     public String sample(){
-        return "sample";
+        return "views/sample";
     }
 }

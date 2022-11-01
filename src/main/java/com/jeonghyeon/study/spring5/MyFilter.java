@@ -1,4 +1,4 @@
-package com.jeonghyeon.study;
+package com.jeonghyeon.study.spring5;
 
 import javax.servlet.*;
 import java.io.IOException;

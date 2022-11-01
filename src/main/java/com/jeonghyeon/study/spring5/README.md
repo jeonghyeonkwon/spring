@@ -37,6 +37,8 @@
 6. 핸들러의 리턴값 처리를 판단
    * 뷰 이름에 해당하는 뷰를 찾아서 모델 데이터를 랜더링한다
    * @ResponseBody가 있다면 Converter를 사용해서 응답 본문을 만들고 응답을 보낸다.
+     * 의존성으로 추가해 줘야 RestApi가 작동되었음 (실습 해봤을 때)
+     * implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0-rc3'
 
 #### DispatcherServlet 구성 요소(각 인터페이스)
 * MultipartResolver
@@ -105,7 +107,7 @@ public class WebApplication
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.jeonghyeon.study.WebConfig</param-value>
+            <param-value>com.jeonghyeon.study.spring5.WebConfigcom.jeonghyeon.study.spring5.WebConfig</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
@@ -126,6 +128,8 @@ public class WebApplication
 * 애노테이션 기반 스프링 MVC를 사용할 때 편리한 웹 MVC 기본 설정
   * 인터셉터나 메시지 컨버터 같은 것을 추가하기 쉬워진다.
 * 확장할려면 WebMvcConfigurer인터페이스를 이용하여 확장하면 된다.
+  * @EnableWebMvc가 제공하는 빈을 WebMvcConfigurer로 커스터마이징 할 수 있다.
+
 ```java
 @Configuration
 @ComponentScan
@@ -137,6 +141,78 @@ public class WebConfig implements WebMvcConfigurer {
         registry.jsp("/WEB-INF/",".jsp");
     }
 }
+```
+
+## 직접 타임리프 구현하면서 
+* WebConfig 설정파일
+```java
+
+@Configuration
+@ComponentScan
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer{
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Bean
+    public SpringResourceTemplateResolver templateResolver(){
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setApplicationContext(this.applicationContext);
+        templateResolver.setPrefix("/WEB-INF/templates/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setCacheable(true);
+        return templateResolver;
+
+    }
+
+    @Bean
+    public SpringTemplateEngine templateEngine(){
+        SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
+        springTemplateEngine.setTemplateResolver(templateResolver());
+        springTemplateEngine.setEnableSpringELCompiler(true);
+        return springTemplateEngine;
+    }
+
+    @Bean
+    public ThymeleafViewResolver thymeleafViewResolver(){
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setContentType("text/html");
+        viewResolver.setCharacterEncoding("UTF-8");
+        return viewResolver;
+    }
+
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.viewResolver(thymeleafViewResolver());
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
+    }
+
+
+}
+```
+* Gradle
+```
+dependencies {
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    testImplementation 'junit:junit:4.11'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    implementation 'org.springframework:spring-webmvc:5.3.23'
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.23'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.1.0.RC1'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.1.0.RC1'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.4'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0-rc3'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+    annotationProcessor( group: 'org.projectlombok', name: 'lombok', version: '1.18.24')
+}
+
 ```
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
