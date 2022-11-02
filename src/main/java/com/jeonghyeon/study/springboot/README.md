@@ -49,3 +49,24 @@
   * 스프링 부트의 스프링 MVC 자동설정 + 추가 설정
 * @Configuration + @EnableWebMvc + implements WebMvcConfigurer
   * 스프링 부트의 스프링 MVC 자동 설정 사용X
+
+## 스프링부트에서 war 패키징
+* 톱캣이나 서블릿 앤진을 사용할 때는 war파일로 패키징 해야 됨
+```java
+public class ServletInitializer extends SpringBootServletInitializer{
+    @Override
+    protected SpringApplicationBuilder configurer(SpringApplicationBuilder application){
+        return application.sources(스프링부트_애플리케이션.class);
+    }
+}
+```
+
+## 스프링부트에서 JSP 
+* 제약사항
+  * JAR 프로젝트로 만들 수 없음, WAR 프로젝트로 만들어야 됨
+  * java -jar 실행할 수는 있지만 "실행가능한 jar 파일"을 지원하지 
+    * jar를 응용 프로그램? 같은거를 만들 수 없다는 뜻인가?
+  * 언더토우는 jsp를 지원하지 않음
+    * undertow
+      * tomcat, jetty, netty와 같은 was
+  * Whitelabel 에러 페이지를 error.jsp로 오버라이딩 할 수 없음
