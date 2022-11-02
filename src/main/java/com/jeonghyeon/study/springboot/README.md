@@ -69,4 +69,4 @@ public class ServletInitializer extends SpringBootServletInitializer{
   * 언더토우는 jsp를 지원하지 않음
     * undertow
       * tomcat, jetty, netty와 같은 was
-  * Whitelabel 에러 페이지를 error.jsp로 오버라이딩 할 수 없음
+  * Whitelabel 에러 페이지를 error.jsp로 오버라이딩 할 수 없음ddd
