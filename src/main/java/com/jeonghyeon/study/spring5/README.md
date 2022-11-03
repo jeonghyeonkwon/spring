@@ -214,5 +214,60 @@ dependencies {
 }
 
 ```
+
+
+## Formatter
+
+```java
+@GetMapping("/hello/{name}")
+public String hello(@PathVariable("name") Person person){
+    // name이라는 path를 Person이라는 객체에 넣어 주고 싶을 때 사용    
+}
+
+```
+
+### Formatter 만들기
+
+```java
+import org.springframework.format.Formatter;
+
+import java.text.ParseException;
+import java.util.Locale;
+
+public class PersonFormatter implements Formatter<Person> {
+    // 어떤 문자열을 객체로 변환할 것인가?
+    @Override
+    public Person parse(String text, Locale locale) throws ParseException {
+        Person person = new Person();
+        person.setName(text);
+        
+        return person;
+    }
+    // 해당 객체를 문자열로 어떻게 출력할 것인가
+    @Override
+    public String print(Person object, Locale locale) {
+        return object.toString();
+    }
+}
+```
+### 만든 Formatter config에 추가
+
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new PersonFormatter());
+        
+    }
+}
+```
+
+* 스프링에서만 이렇게 쓰지 부트에서는 @Component으로 빈 등록 하면 된다.
+
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)

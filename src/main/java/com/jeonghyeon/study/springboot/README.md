@@ -70,3 +70,33 @@ public class ServletInitializer extends SpringBootServletInitializer{
     * undertow
       * tomcat, jetty, netty와 같은 was
   * Whitelabel 에러 페이지를 error.jsp로 오버라이딩 할 수 없음
+
+## 스프링 부트 테스트
+
+```java
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+@RunWith(SpringRunner.class)
+@WebMvcTest
+public class SampleControllerTest {
+  @Autowired
+  MockMvc mockMvc;
+  
+  @Test
+  public void hello() throws Exception{
+      this.mockMvc.perform(get("/hello"))
+              .andDo(print())
+              .param("name","jeonghyeon")
+              .andExpect(content().string("hello"));
+  }
+}
+```
+
+* @WebMvcTest
+  * 웹과 관련된 빈 들만 등록 해준다.
+  * [spring5 - README.md의 formatter]()를 @Component로 빈 등록 했더라도 웹 관련 빈이라고 인식 못함
+* @SpringBootTest
+  * 통합 테스트용 빈
+  * 모든 빈들을 등록 (@SpringBootApplicaiton 부터)
+  * 이러면 MockMvc는 등록되지 않아 @AutoConfigureMockMvc도 추가 해야 됨
