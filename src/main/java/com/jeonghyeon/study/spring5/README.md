@@ -269,5 +269,65 @@ public class WebConfig implements WebMvcConfigurer {
 
 * 스프링에서만 이렇게 쓰지 부트에서는 @Component으로 빈 등록 하면 된다.
 
+
+## 핸들러 인터셉터
+* 핸들러 매핑에 설정할 수 있는 인터셉터
+* 여러 핸들러에서 반복적으로 사용하는 코드를 중이고 싶을 때 사용
+  * 로깅, 인증 체크, Locale 변경
+
+### 순서
+1. preHandle (1)
+   * boolean preHandle(request,response,handler)
+2. preHandle (2)
+3. 요청 처리
+4. postHandle (2)
+   * void postHandle(request,response,modelAndView)
+5. postHandle (1)
+6. 뷰 랜더링
+7. afterCompletion (2)
+8. afterCompletion (1)
+
+### 서블릿 필터와 차이점
+* 서블릿 필터 보다 구체적인 처리가 가능하다
+  * handler나 modelAndView를 지원하기 때문에
+* 서블릿 필터은 일반적인 용도의 기능을 구현하는데 좋다
+  * 스프링의 특화된 기술이 아닌 것들 (Xss 공격 처리하는 것들 - Luccy)
+
+### 구현
+```java
+@Configuration
+@ComponentScan
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+
+  
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new GreetingInterceptor())
+                .addPathPatterns("/hi")
+                .order(0);
+    }
+}
+
+public class GreetingInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("preHandle");
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        System.out.println("postHandle");
+
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        System.out.println("afterCompletion");
+    }
+}
+
+```
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
