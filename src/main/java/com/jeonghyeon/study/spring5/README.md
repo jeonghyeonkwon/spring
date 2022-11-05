@@ -299,8 +299,7 @@ public class WebConfig implements WebMvcConfigurer {
 @ComponentScan
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-
-  
+    
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new GreetingInterceptor())
@@ -329,5 +328,62 @@ public class GreetingInterceptor implements HandlerInterceptor {
 }
 
 ```
+
+## 리소스 핸들러
+* 정적인 리소스를 처리하는 핸들러
+* 톰캣, jetty, 언더토우 같은것에는 디폴트 서블릿들이 각각 있다
+  * 스프링은 이 디폴트 서블릿에 요청을 위임해서 정적인 리소스를 처리한다.
+    * 이렇게 하면 정적인 리소스가 먼저 처리되어 만든 핸들러가 작동 안하기 때문에 정적인 리소스 핸들러를 우선순위를 낮게 한다.
+* 스프링 부트에서는 기본적으로 정적 리소스 핸들러와 캐싱 제공한다.
+  * static 디렉토리 밑에 index.html 파일을 만들고 body에 hello index 작성 후 밑에 코드를 테스트 하면 참이 뜬다
+```java
+@Test
+public void helloStatic() throws Exception{
+    this.mockMvc.perform(get("/index.html"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().string(Matchers.containsString("hello index")));
+}
+```
+### 리소스 핸들러 설정하는 법
+* classpath 이외에도 파일 시스템 기반도 가능하다
+  * classpath를 주지 않으면 src/main/web/app로 찾는다
+```java
+
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
+
+import java.util.concurrent.TimeUnit;
+
+@Configuration
+@ComponentScan
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/mobile/**") // url 요청이 들어오면
+                .addResourceLocations("classpath:/mobile/") //여기서 찾아라 classpath:/ 는 java와 resources 디렉토리 둘 다 이다.
+                .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES)); // 캐시 설정도 가능
+        
+    }
+}
+/*
+ * network의 Headers에 If-Modified-Since 로 체크를 한다 
+ * 
+ * */
+// 테스트에서 캐시 테스트도 가능
+@Test
+public void helloStatic() throws Exception {
+    this.mockMvc.perform(get("/mobile/index.html"))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string(Matchers.containsString("hello mobile")))
+            .andExpect(heder().exists(HttpHeaders.CACHE_CONTROL));
+}
+
+```
+
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
