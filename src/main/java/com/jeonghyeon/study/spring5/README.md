@@ -11,7 +11,7 @@
 
 ### 주요 키워드(설명 추가 예정)
 * RootApplicationContext
-  * Web에 관련된 것은 없다 (Service, Repositorys)
+  * Web에 관련된 것은 없다 (Service, Repository)
 * WebApplicationContext
   * Servlet WebApplicationContext
     * RootApplicationContext를 상속 받아 만든 것이다 
@@ -56,7 +56,7 @@
   * 요청 처리 중에 발생한 에러 처리하는 인터페이스
 * RequestToViewNameTranslator
   * 핸들러에서 뷰 이름을 명시적으로 리턴하지 않는 경우, 요청을 기반으로 뷰 이름을 판단하는 인터페이스
-  * return 값이 void라도 @GetMappiing("/sample")이면 return을 sample로 뷰를 찾아줌 
+  * return 값이 void라도 @GetMapping("/sample")이면 return을 sample로 뷰를 찾아줌 
 * ViewResolvers
   * 뷰 이름에 해당하는 뷰를 찾아내는 인터페이스
 * FlashMapManger
@@ -385,5 +385,44 @@ public void helloStatic() throws Exception {
 
 ```
 
+## 메시지 컨버터
+* 스프링에서 메시지 컨버터 사용
+  * request = @RequestBody
+  * response = @ResponseBody + @Controller = @RestController
+* request의 contentType에 따라 밑의 컨버터 등이 결정됨
+### 기본 HTTP 메시지 컨버터( 괄호에 있는 것들은 라이브러리를 추가 해야됨)
+* 바이트 배열 컨버터
+* 문자열 컨버터
+* Resource 컨버터
+* Form (폼 데이터 to/from MultiValueMap<String, String>)
+* (JAXB2 컨버터)
+  * XML용
+* (Jackson2 컨버터)
+  * Json용
+* (Jackson 컨버터)
+  * Json용
+* (Gson 컨버터)
+  * Json용
+* (Atom 컨버터)
+  * Atom 피드
+* (RSS 컨버터)
+  * Rss 피드
+### 메시지 컨버터 등록 방법
+* webconfig에서 추가
+```java
+@Override
+public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    WebMvcConfigurer.super.configureMessageConverters(converters);
+} // 기존 컨버터들을 사용 못함
+
+@Override
+public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+    WebMvcConfigurer.super.extendMessageConverters(converters);
+} // 기존 컨버터에 추가
+```
+* 의존성 라이브러리로 추가
+  * 메이븐 또는 그레이들에 의존성을 추가하면 컨버터가 자동으로 등록됨
+  * WebMvcConfigurationSuppo
+    * 스프링 기능임
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
