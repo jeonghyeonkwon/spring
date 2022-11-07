@@ -422,7 +422,16 @@ public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 ```
 * 의존성 라이브러리로 추가
   * 메이븐 또는 그레이들에 의존성을 추가하면 컨버터가 자동으로 등록됨
-  * WebMvcConfigurationSuppo
-    * 스프링 기능임
+  * WebMvcConfigurationSupport
+    * 스프링 MVC 기능임
+    * 의존성 추가하면 풀패키지 경로로 이 라이브러리가 있냐 판단으로 추가 가능
+* 스프링 부트를 사용하는 경우 기본적으로 JacksonJSON2 라이브러리가 들어있다
+
+### XML 컨버터 등록
+* 의존성 라이브러리
+  * JacksonXML
+  * JAXB
+* 스프링 부트를 사용하더라도 XML 라이브러리를 추가 해주지 않음
+* 사용법은 백기선님 강좌에서
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
