@@ -432,6 +432,19 @@ public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
   * JacksonXML
   * JAXB
 * 스프링 부트를 사용하더라도 XML 라이브러리를 추가 해주지 않음
-* 사용법은 백기선님 강좌에서
+* 사용법은 백기선님 강좌에
+
+## HTTP method(필요한 내용만 정리)
+* GET
+  * 캐싱 할 수 있다(조건적인 GET으로 바꿀수 있다)
+  * 브라우저에 기록에 남는다
+  * 북마크 할 수 있다
+  * idemponent
+    * 동일안 요청은 동일한 응답을 해야된다.
+* POST
+* PUT
+* PATCH
+  * idemponent
+* DELETE
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
