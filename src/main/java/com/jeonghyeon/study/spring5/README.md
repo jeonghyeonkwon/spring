@@ -446,5 +446,16 @@ public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 * PATCH
   * idemponent
 * DELETE
+
+## URL 패턴
+* 요청 식별자로 매핑 (중복 시 가장 디테일한 것으로 찾음)
+  * ? 한글자 매핑 @GetMapping("/test/???") -> @GetMapping("/test/abc)
+  * \* 여러 글자 @GetMapping("/test/*") -> @GetMapping("/test/abc")
+  * \** 여러 패스 @GetMapping("/test/**") -> @GetMapping("/test/a/b/c")
+  * 정규 표현식으로도 가능
+* 스프링 MVC에서는 givejeong.html, givejeong.zip이 가능하다
+  * 하지만 스프링 부트 부터는 이 기능을 지원하지 않는다 (RFD Attack 관련)
+    * RFD attack 
+      * 파일을 다운로드 받아지고 실행하면 보안상 위험
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
