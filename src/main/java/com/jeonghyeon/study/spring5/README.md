@@ -457,5 +457,15 @@ public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
   * 하지만 스프링 부트 부터는 이 기능을 지원하지 않는다 (RFD Attack 관련)
     * RFD attack 
       * 파일을 다운로드 받아지고 실행하면 보안상 위험
+
+## 미디어 타입
+* Content-Type
+  * 요청할 때 이 형식으로 보낸다
+  * @GetMapping(value="hello", consumers = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  * 매치가 안되면 415 에러
+* Accept
+  * 응답을 이런 형식으로 받고싶다
+  * @GetMapping(value="hello", produces = MediaType.TEXT_PLAIN_VALUE)
+  * 매치가 안되면 406에러
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
