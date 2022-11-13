@@ -467,5 +467,20 @@ public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
   * 응답을 이런 형식으로 받고싶다
   * @GetMapping(value="hello", produces = MediaType.TEXT_PLAIN_VALUE)
   * 매치가 안되면 406에러
+
+## 헤더와 매개 변수
+* 특정한 헤더에 따라 처리하고 싶을 때
+  * 특정 헤더가 있을 때
+    * @GetMapping(header="key")
+  * 특정 헤더가 없는 것만
+    * @GetMapping(header="!key")
+  * 특정 키와 값이 있는것
+    * @GetMapping(header="key=value")
+  * 파라미터가 있을 때
+    * @GetMapping(header="key", params="a")
+  * 파라미터가 없을 때
+    * @GetMapping(header="key", params="!a")
+  * 파라미터의 키와 값이 일치할 때
+    * @GetMapping(header="key", params="key=a")
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
