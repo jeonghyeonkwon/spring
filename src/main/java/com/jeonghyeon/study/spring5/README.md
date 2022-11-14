@@ -482,5 +482,17 @@ public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
     * @GetMapping(header="key", params="!a")
   * 파라미터의 키와 값이 일치할 때
     * @GetMapping(header="key", params="key=a")
+
+## HEAD OPTION
+### HEAD
+* GET 요청과 같지만 헤더만 보내준다. body 부분은 X
+
+### OPTION
+* uri의 메소드 정보를 확인할 수 있다.
+  * /user라고 했을때 
+    * GET : 유저 리스트
+    * POST : 유저 생성
+    * PUT, PATCH : 유저 수정
+    * DELETE : 유저 삭제
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
