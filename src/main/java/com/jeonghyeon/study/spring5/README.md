@@ -494,5 +494,28 @@ public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
     * POST : 유저 생성
     * PUT, PATCH : 유저 수정
     * DELETE : 유저 삭제
+
+## 커스텀 애노테이션
+* [자바 애노테이션 관련 정리](https://github.com/jeonghyeonkwon/java-study/blob/main/src/main/java/com/jeonghyeon/javastudy/whiteship/liveStudy12/README.md)
+
+### 메타 애노테이션
+* 애노테이션에 사용할 수 있는 애노테이션
+* 스프링에 제공하는 대부분 애노테이션들은 메타 에노테이션으로 사용할 수 있다.
+
+### 애노테이션 만들어 보기
+```java
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.lang.annotation.*;
+
+@Documented // 문서화 시
+@Target(ElementType.METHOD) // 어디에 이 애노테이션을 붙일 것인지
+@Retention(RetentionPolicy.RUNTIME) // 언제까지 이 애노테이션을 살려놓을 것인지(런타입때까지 도)
+@RequestMapping(value = "/hello", method = RequestMethod.GET)
+public @interface GetHelloMapping {
+
+}
+```
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
