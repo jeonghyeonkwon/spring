@@ -517,5 +517,32 @@ public @interface GetHelloMapping {
 
 }
 ```
+
+## 메소드, 아규먼트
+* 요청 또는 응답 자체에 접근 가능한 API
+  * 스프링이 지원하는 아규먼트
+    * WebRequest, WebNativeRequest
+  * 서블릿이 지원하는 아규먼트
+    * HttpServletRequest, HttpServletResponse
+* 요청 본문, 응답 본문을 읽거나 쓸 때 사용하는 API
+  * InputStream, Reader, OutputStream, Writer
+* 스프링5, HTTP/2 리소스 푸쉬
+  * PushBuilder
+    * 요청 응답 후 보낼 리소스가 더있으면 요청을 보내지 않아도 응답을 보내줌(HTTP/2 기능)
+* http method 정보를 알고 싶을 때
+  * HttpMethod
+* LocalResolver가 분석한 정보를 알고 싶을 때
+  * Local, TimeZone, ZoneId
+* ETC
+  * @RequestBody, @CookieValue, @RequestHeader, @MatrixVariable
+
+### @PathVariable
+* option으로 required = true or false 사용 가능
+* Optional<Long> id 같이 받는 형태도 가능
+### @MatrixVariable
+* key=value 쌍으로 받는 것
+* 기본적으로 비활성화라서 풀어줘야됨
+* url이 /event/1;name=jeonghyeon이라면 @PathVariable로 1을 받고 세미콜론 뒤의 name이 key jeonghyeon이 value로 받는다
+
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
