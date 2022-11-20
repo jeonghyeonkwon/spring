@@ -544,5 +544,36 @@ public @interface GetHelloMapping {
 * 기본적으로 비활성화라서 풀어줘야됨
 * url이 /event/1;name=jeonghyeon이라면 @PathVariable로 1을 받고 세미콜론 뒤의 name이 key jeonghyeon이 value로 받는다
 
+## @Valid And @Validated
+[@Valid 검증 관련 예제](https://github.com/jeonghyeonkwon/blog-example-project/tree/main/src/main/java/com/example/blogproject/aboutvalidate)
+* Valid라는 애노테이션에는 그룹을 지정할 수 없다
+  * Validated는 그룹으로 지정 가능하다
+
+```java
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+class User {
+  interface MaxUser {
+  }
+
+  interface MinUser {
+  }
+
+  @Max(value = 0, groups = MaxUser.class)
+  private Long MaxNum;
+
+  @Min(value = 0, group = MinUser.class)
+}
+
+
+import org.springframework.validation.annotation.Validated;
+        import org.springframework.web.bind.annotation.PostMapping;
+
+@PostMapping("/user")
+public ResponseEntity register(@Validated(User.MaxUser.class) @ModelAttribute ...){
+        ...
+}
+```
+
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
