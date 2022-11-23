@@ -575,5 +575,53 @@ public ResponseEntity register(@Validated(User.MaxUser.class) @ModelAttribute ..
 }
 ```
 
+## @SessionAttributes와 @SessionAttribute 차이
+
+### @SessionAttributes
+* 이 애노테이션은 전역으로 설정한다
+* 이 애노테이션에 설정한 이름에 해당하는 모델 정보를 자동으로 세션에 넣어준다
+* 여러 화면(또는 요청)에서 사용해야 하는 객체를 공유할 때 사용한다
+
+```java
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+@Controller
+@SessionAttributes({"event", ...})
+public class AController {
+  @GetMapping("/event/form")
+  public String eventsForm(Model model){
+    ...
+      model.addAttribute("event", eventObject);// modelAttribute에 넣어줬지만 sessionAttributes에도 같은 키 임으로 session에도 넣어준다.
+      return "/event/form";
+  }
+}
+```
+* SessionStatus를 사용해서 세션 처리 완료를 알려줄 수 있다
+  * 세션 비울 때 사용
+```java
+@GetMapping("/event/form2")
+public String eventsForm(SessionStatus sessionStatus){
+        ...
+        sessionStatus.setComplete();
+        return "/event/form2";
+}
+```
+### @SessionAttribute
+* HttpSession을 사용해도 되지만 더 편리함
+  * 넣고 빼고를 해야된다면 HttpSession을 사용하는 것이 낫다
+
+```java
+
+import org.springframework.web.bind.annotation.SessionAttribute;
+
+@GetMapping("/")
+public String method(@SessionAttribute("sessionKey") String sessionId){
+// 들어 있는 세션의 값을 꺼낼 때 사용 (sessionId에 값이 담기고 sessionKey는 key이다)    
+}
+
+```
+
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
