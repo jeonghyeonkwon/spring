@@ -622,6 +622,46 @@ public String method(@SessionAttribute("sessionKey") String sessionId){
 }
 
 ```
+## @RedirectAttribute
 
+* RedirectAttribute 설명 아님
+  * spring-mvc에서는 model.addAttribute에 담은 값을 redirect 시킬 시 쿼리 파라미터로 붙는다( spring boot는 기본이 true다 )
+```yaml
+spring.mvc.ignore-default-model-on-redirect=false로 바꿔주면 됨
+```
+
+```java
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@PostMapping("events/form/list")
+public String register(Model model){
+//    ...
+        model.addAttribute("name", "jeonghyeon");
+        return"redirect:/event/list";
+}
+
+// http://localhost:8080/event/list?name=jeonghyeon        
+@GetMapping("/event/list")
+...
+```
+* 전체 쿼리파라미터로 받고 싶지 않고 선택한 것만 받고 싶다? (스프링 부트에서는 위에 환경설정 지우고)
+  * 그때 RedirectAttributes 사용하면 됨
+```java
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@PostMapping("events/form/list")
+public String register(RedirectAttributes attributes){
+//    ...
+        attributes.addAttribute("name", "jeonghyeon");
+        return"redirect:/event/list";
+}
+
+// http://localhost:8080/event/list?name=jeonghyeon        
+@GetMapping("/event/list")
+public String getEvent()
+// @RequestParam OR @ModelAttribute로 받으면 된다
+```
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
