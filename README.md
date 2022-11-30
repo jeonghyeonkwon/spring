@@ -19,5 +19,12 @@
 * @Valid AND @Validated
 * @SessionAttributes와 @SessionAttribute 차이
 * @RedirectAttribute
-## Spring-Boot
+
+## [Spring-Boot](https://github.com/jeonghyeonkwon/spring-mvc/tree/main/src/main/java/com/jeonghyeon/study/springboot)
+* DispatcherServlet
+* 스프링 MVC 커스터마이징
+* 스프링부트에서 war 패키징
+* 스프링부트에서 JSP
+* 스프링 부트 테스트
+
 ## [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
