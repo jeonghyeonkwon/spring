@@ -19,6 +19,7 @@
 * @Valid AND @Validated
 * @SessionAttributes와 @SessionAttribute 차이
 * @RedirectAttribute
+* Flash Attributes
 
 ## [Spring-Boot](https://github.com/jeonghyeonkwon/spring-mvc/tree/main/src/main/java/com/jeonghyeon/study/springboot)
 * DispatcherServlet

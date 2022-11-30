@@ -663,5 +663,28 @@ public String register(RedirectAttributes attributes){
 public String getEvent()
 // @RequestParam OR @ModelAttribute로 받으면 된다
 ```
+
+## Flash Attributes
+* RedirectAttribute에서 사용됨
+* 기존 RedirectAttributes로 addAttribute할 시 url에 노출되지만 FlashAttribute로 사용하면 1회성 Http Session에 담겨서 전달된다.
+  * 바로 삭제됨
+
+```java
+import org.springframework.web.bind.annotation.GetMapping;
+
+@PostMapping("events/form/list")
+public String register(RedirectAttributes attributes){
+//    ...
+        attributes.addFlashAttribute("name","jeonghyeon");
+        return"redirect:/event/list";
+        }
+
+@GetMapping("/events/list")
+public String getEvents(Model model, ...){
+        String name = (String)model.asMap().get("name");
+        ...
+}
+
+```
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
