@@ -686,5 +686,41 @@ public String getEvents(Model model, ...){
 }
 
 ```
+
+## MultipartFile
+* 파일 업로드시 사용하는 메소드 아규먼트
+* MultipartResolver 빈 설정 되어 있어야 사용할 수 있다
+  * 스프링 부트는 자동 설정
+* POST multipart/form-data 요청에 들어있는 파일을 참조할 수 있다
+* List 형태로도 받을수 있다
+
+### 파일 업로드 테스트 코드 작성
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class FileControllerTest {
+
+  @Autowired
+  private MockMvc mockMvc;
+  
+  @Test
+  public void fileUploadTest() throws Exception{
+      MockMultipartFile file = new MockMultipartFile(
+              "file",
+              "test.txt",
+              "text/plain",
+              "hello file".getBytes()
+      );
+      this.mockMvc.perform(multipart("/file").file(file))
+              .andDo(print())
+              .andExpect(status().is3xxRedirection());
+  }
+}
+```
+
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
