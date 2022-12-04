@@ -687,7 +687,7 @@ public String getEvents(Model model, ...){
 
 ```
 
-## MultipartFile
+## 파일 업로드 - MultipartFile
 * 파일 업로드시 사용하는 메소드 아규먼트
 * MultipartResolver 빈 설정 되어 있어야 사용할 수 있다
   * 스프링 부트는 자동 설정
@@ -721,6 +721,35 @@ public class FileControllerTest {
   }
 }
 ```
+## 파일 다운로드
+* 파일 리소스 읽어 오기
+  * 스프링 ResourceLoader 사용
+* 파일 다운로드 헤더 설정
+  * Content-Disposition : 사용자가 해당 파일을 받을 때 사용할 파일 이름
+  * Content-Type : 어떤 파일인가
+  * Content-Length: 얼마나 큰 파일인가
+* 미디어 타입 알아내기
+  * http://tika.apache.org/
+
+```java
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@GetMapping("/file/{filename}")
+public ResponseEntity<Resource> downloadFile(
+    @PathVariable String filename
+) throws IOException {
+    Resource resource = resourceLoader.getResource("classpath:"+filename);
+    File file = resource.getFile();
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION,"attachement; filename=\"" + resource.getFilename()+"\"")
+        .header(HttpHeaders.CONTENT_TYPE.type)
+        .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))
+        .body(resource);
+}
+```
+
 
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)

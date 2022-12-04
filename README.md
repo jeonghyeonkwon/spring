@@ -20,7 +20,10 @@
 * @SessionAttributes와 @SessionAttribute 차이
 * @RedirectAttribute
 * Flash Attributes
-* MultipartFile
+* 파일 업로드 - MultipartFile
+* 파일 다운로드
+
+
 ## [Spring-Boot](https://github.com/jeonghyeonkwon/spring-mvc/tree/main/src/main/java/com/jeonghyeon/study/springboot)
 * DispatcherServlet
 * 스프링 MVC 커스터마이징
