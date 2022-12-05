@@ -22,7 +22,7 @@
 * Flash Attributes
 * 파일 업로드 - MultipartFile
 * 파일 다운로드
-
+* @RequestBody & HttpEntity
 
 ## [Spring-Boot](https://github.com/jeonghyeonkwon/spring-mvc/tree/main/src/main/java/com/jeonghyeon/study/springboot)
 * DispatcherServlet

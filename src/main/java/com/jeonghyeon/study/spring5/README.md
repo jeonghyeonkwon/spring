@@ -749,7 +749,15 @@ public ResponseEntity<Resource> downloadFile(
         .body(resource);
 }
 ```
+## @RequestBody & HttpEntity
+* RequestBody
+  * 요청 본문에 들어있는 데이터를 HttpMessageConveter를 통해 변환한 객체로 받아올 수 있다
+* HttpEntity
+  * @RequestBody와 비슷하지만 추가적으로요청 헤더 정보를 사용할 수 있다.
 
+
+### Json으로 컨버팅 하고 싶다
+* 스프링 부트에서는 기본적으로 jackson2가 들어가 있다
 
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
