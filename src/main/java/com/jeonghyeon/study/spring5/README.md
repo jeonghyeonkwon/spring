@@ -759,5 +759,9 @@ public ResponseEntity<Resource> downloadFile(
 ### Json으로 컨버팅 하고 싶다
 * 스프링 부트에서는 기본적으로 jackson2가 들어가 있다
 
+## @ResponseBody & ResponseEntity
+* ResponseBody는 기본적으로 @Restcontroller를 사용 시 붙여져 있다
+* ResponseEntity
+  * 응답 헤더 상태 코드 본문을 직접 다루고 싶은 경우에 사용한다.
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
