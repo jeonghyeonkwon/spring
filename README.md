@@ -24,7 +24,7 @@
 * 파일 다운로드
 * @RequestBody & HttpEntity
 * @ResponseBody & ResponseEntity
-
+* @ModelAttribute
 ## [Spring-Boot](https://github.com/jeonghyeonkwon/spring-mvc/tree/main/src/main/java/com/jeonghyeon/study/springboot)
 * DispatcherServlet
 * 스프링 MVC 커스터마이징

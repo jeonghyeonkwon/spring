@@ -763,5 +763,44 @@ public ResponseEntity<Resource> downloadFile(
 * ResponseBody는 기본적으로 @Restcontroller를 사용 시 붙여져 있다
 * ResponseEntity
   * 응답 헤더 상태 코드 본문을 직접 다루고 싶은 경우에 사용한다.
+
+## @ModelAttribute
+* 컨트롤러 메소드 마다 model.addAttribute로 공통된 부분을 넣어주기 귀찮을 수 있다. 그때 사용
+
+```java
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+@Controller
+public class EventController {
+
+  @ModelAttribute
+  public void categories(Model model){
+      model.addAttribute("categories", List.of("study","seminar",...));
+  }
+  
+  @ModelAttribute("categories")
+  public List<String> categories(Model model){
+      return model.addAttribute("categories", List.of("study","seminar",...));
+  }
+}
+```
+### 테스트 코드에서 model 들어가 있는지 확인
+```java
+@Test
+public void getEvents() throws Exception{
+    Event event = new Event();
+    event.setName("Winter is coming");
+    event.setLimit(1000);
+    
+    mockMvc.perform(get("/event/list"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("categories"));
+}
+```
+
+
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
