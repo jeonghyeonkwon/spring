@@ -25,6 +25,7 @@
 * @RequestBody & HttpEntity
 * @ResponseBody & ResponseEntity
 * @ModelAttribute
+* InitBinder
 ## [Spring-Boot](https://github.com/jeonghyeonkwon/spring-mvc/tree/main/src/main/java/com/jeonghyeon/study/springboot)
 * DispatcherServlet
 * 스프링 MVC 커스터마이징

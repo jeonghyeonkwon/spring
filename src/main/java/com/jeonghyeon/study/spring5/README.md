@@ -800,7 +800,82 @@ public void getEvents() throws Exception{
         .andExpect(model().attributeExists("categories"));
 }
 ```
+## InitBinder
+* 특정 컨트롤러에서 바인딩 또는 검증설정을 변경하고 싶을 때
 
+### 바인딩 설정
+```java
+import org.springframework.format.annotation.DateTimeFormat;
+
+
+import org.springframework.stereotype.Controller;
+        import org.springframework.web.bind.WebDataBinder;
+        import org.springframework.web.bind.annotation.InitBinder;
+
+@Controller
+public class AController {
+  @InitBinder
+  public void initEventBinder(WebDataBinder webDataBinder) {
+//      id를 받고 싶지 않을 때
+    webDataBinder.setDisallowedFields("id");
+
+  }
+}
+```
+### 포메터 설정
+```java
+import java.time.LocalDate;
+
+public class Event {
+
+  private Integer id;
+
+  // ...
+
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  private LocalDate localDate;
+  
+}
+
+```
+
+### Validator 설정
+
+```java
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
+@Component
+public class EventValidator implements Validator {
+  @Override
+  public boolean supports(Class<?> clazz) {
+    return Event.class.isAssignableFrom(clazz);
+  }
+
+  @Override
+  public void validate(Object target, Errors errors) {
+    Event event = (Event) target;
+    if (event.getName().equalsIgnoreCase("aaa")) {
+      errors.rejectValue("name", "wrongValue", "the value is not allowed");
+    }
+  }
+}
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+
+        import org.springframework.stereotype.Controller;
+        import org.springframework.web.bind.WebDataBinder;
+
+@Controller
+public class AController {
+  @InitBinder
+  public void initEventBinder(WebDataBinder webDataBinder) {
+    webDataBinder.addValidators(new EventValidator);
+  }
+}
+```
 
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
