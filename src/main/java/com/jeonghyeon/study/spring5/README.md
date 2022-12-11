@@ -877,5 +877,23 @@ public class AController {
 }
 ```
 
+## 전역 컨트롤러 - @(Rest)ControllerAdvice
+* 예외처리, 바인딩, 모델 객체를 전역적으로 쓰고 싶을 떄 사용
+  * 해당 컨트롤러들만 적용도 가능
+* RestControllerAdvice도 있다
+
+```java
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+@ControllerAdvice(assignableTypes = {MainController.class, EventController})
+public class GlobalAdvice {
+  @InitBinder
+  public void initEventBinder(WebDataBinder webDataBinder) {
+    webDataBinder.addValidators(new EventValidator);
+  }
+  ...
+}
+```
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
