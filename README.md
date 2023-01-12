@@ -36,6 +36,11 @@
 * 스프링부트에서 JSP
 * 스프링 부트 테스트
 
+
+## [SpringCore]()
+* IOC
+
+
 ## 자세한 내용
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
 
