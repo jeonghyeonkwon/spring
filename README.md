@@ -37,9 +37,9 @@
 * 스프링 부트 테스트
 
 
-## [SpringCore]()
+## [SpringCore](https://github.com/jeonghyeonkwon/spring-mvc/blob/main/src/main/java/com/jeonghyeon/study/springcore/README.md)
 * IOC
-
+* ApplicationContext
 
 ## 자세한 내용
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)

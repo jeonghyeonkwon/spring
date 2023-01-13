@@ -22,3 +22,17 @@ public class AccountService{
 }
 
 ```
+
+## ApplicationContext
+* 스프링 IOC 컨테이너는 빈 설정파일이 있어야 된다.
+* XML, 자바 설정을 읽어 오는 방식이 있다
+  * ClassPathXmlApplicationContext (XML)
+  * AnnotationConfigApplicationContext (JAVA)
+### 스프링 어노테이션
+* @Configuration
+* @Bean
+* @ComponentScan(basePackageClasses = 클래스명.class)
+* @Component
+  * @Controller
+  * @Service
+  * @Repository
