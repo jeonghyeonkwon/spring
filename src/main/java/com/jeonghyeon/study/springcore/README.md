@@ -36,3 +36,62 @@ public class AccountService{
   * @Controller
   * @Service
   * @Repository
+
+## @Autowired
+* required : 기본값 true
+
+### 위치
+* 생성자
+* setter
+* 필드
+
+### 해당 타입의 빈이 여러개인 경우
+* @Primary
+
+```java
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Primary
+public class AccountRepository implements Repository {
+
+}
+```
+* @Qualifier
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+@Service
+public class AccountService {
+  @Autowired
+  @Qualifier("accountRepository")
+  Repository repository;
+}
+```
+* 다 받아라
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Service
+public class AccountService {
+  @Autowired
+  List<Repository> repository;
+}
+```
+
+* 필드명으로 주입받기
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Service
+public class AccountService {
+  @Autowired
+  Repository accountRepository;
+}
+```
+
+
+### 작동 원리
+* BeanPostProcessor인터페이스의 구현체에 의해서 동작
