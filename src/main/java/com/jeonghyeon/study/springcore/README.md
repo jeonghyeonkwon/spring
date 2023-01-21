@@ -29,14 +29,14 @@ public class AccountService{
   * ClassPathXmlApplicationContext (XML)
   * AnnotationConfigApplicationContext (JAVA)
 ### 스프링 어노테이션
-* @Configuration
+
 * @Bean
 * @ComponentScan(basePackageClasses = 클래스명.class)
 * @Component
   * @Controller
   * @Service
   * @Repository
-
+  * @Configuration
 ## @Autowired
 * required : 기본값 true
 
@@ -92,6 +92,38 @@ public class AccountService {
 }
 ```
 
-
 ### 작동 원리
-* BeanPostProcessor인터페이스의 구현체에 의해서 동작
+* BeanPostProcessor 인터페이스의 구현체에 의해서 동작
+
+
+## @ComponentScan AND @Component
+
+### @ComponentScan
+* basePackage 기준으로 빈들을 스캔한다
+  * 스프링 부트는 Application 클래스가 기본이다
+
+#### basePackage 밖의 빈 등록하기
+
+```java
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.support.GenericApplicationContext;
+
+public class SpApplication {
+  @Autowired
+  ExcludePackageClass clazz;
+
+  public static void main(String[] args) {
+    var app = new SpringApplication(SpApplication.class);
+
+    app.addInitializers((ApplicationContextInitializer<GenericApplicationContext>)
+
+            ctx -> {
+              ctx.registerBean(ExcludePackageClass.class);
+            });
+
+    app.run(args);
+  }
+}
+```
