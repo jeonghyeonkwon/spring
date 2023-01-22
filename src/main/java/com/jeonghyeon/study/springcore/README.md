@@ -127,3 +127,45 @@ public class SpApplication {
   }
 }
 ```
+
+
+## 빈 스코프
+* 기본은 싱글톤이다
+  * 인스턴스가 1개만 생성되고 그 다음부터는 생성된 객체를 재활용 해서 쓴다는 것
+* 프로토 타입의 예
+  * Request
+  * Session
+  * WebSocket
+  * ...
+* 
+### 빈 프로토 타입 만드는 방법
+
+```java
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope("prototype")
+public class Proto{
+  ...
+}
+```
+
+### 빈 사이의 참조
+* 프로토에서 싱글톤을 참조하면 문제가 되지 않는다.
+* 하지만 싱글톤에서 프로토를 참조하면 프로토의 주소가 변하지 않는다
+#### 싱글톤에서 참조하는 프로토의 객체 주소 변경시키는 방법
+* proxyMode = ScopedProxyMode.TARGET_CLASS
+  * 해당클래스를 프록시 클래스를 감싸서 싱글톤 객체가 프로토를 참조하는 것이 아닌 프록시를 참조
+    * SingleTon -> Proxy -> Proto
+```java
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class Proto {
+  ...
+}
+```
