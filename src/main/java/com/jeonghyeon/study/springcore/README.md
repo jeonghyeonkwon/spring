@@ -169,3 +169,36 @@ public class Proto {
   ...
 }
 ```
+
+
+## Environment
+* dev, stage, prod, ... 처럼 다른 환경에서 사용해야 되는 빈들을 모아두는 것
+### 프로파일
+* EnvironmentCapable의 제공 하는 기능 중 하나
+
+```java
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Configuration
+@Profile("test")
+public class TestConfiguration {
+  @Bean
+  //@Profile("test")
+  public BoodRepository boodRepository() {
+    return new BookRepository();
+  }
+}
+
+//or
+@Component
+@Profile("test")
+public interface BookRepository extends ...{
+    
+}
+
+```
+* -Dspring.profiles.active="test"
