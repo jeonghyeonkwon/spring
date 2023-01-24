@@ -202,3 +202,9 @@ public interface BookRepository extends ...{
 
 ```
 * -Dspring.profiles.active="test"
+
+### 프로퍼티
+
+* [스프링 부트 env](https://github.com/jeonghyeonkwon/spring-boot-study/blob/main/src/main/java/com/jeonghyeon/springbootstudy/read/uses.md)
+* @PropertySource
+  * Environment를 통해 프로퍼티 추가하는 방법
