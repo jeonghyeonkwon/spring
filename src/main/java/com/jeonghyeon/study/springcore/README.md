@@ -208,3 +208,71 @@ public interface BookRepository extends ...{
 * [스프링 부트 env](https://github.com/jeonghyeonkwon/spring-boot-study/blob/main/src/main/java/com/jeonghyeon/springbootstudy/read/uses.md)
 * @PropertySource
   * Environment를 통해 프로퍼티 추가하는 방법
+
+
+## MessageSource
+* ApplicationContext는 MessageSource도 상속 받았다
+* 국제화 기능을 제공한다
+  * 언어별로 번역을 하여 내용을 반환한다
+    * 번역기를 돌려주는 것이 아닌 직접 다 써야된다...
+* 스프링 부트를 쓰고 있다면 파일명은 이렇게 지어야 된다
+  * messages.properties
+  * messages_ko_KR.properties
+
+## ApplicationEventPublisher
+* 이벤트 기반 프로그래밍에 필요한 인터페이스
+  * 데이터를 전송하는 것과 그 이벤트를 구독하는 것
+* 옵저버 패턴
+
+```java
+public class Event1 {
+  private int data;
+  private Object source;
+
+  public Event1(Object source, int data) {
+    this.source = source;
+    this.data = data;
+  }
+
+  public int getData() {
+    return data;
+  }
+
+  public Object getSource() {
+    return source;
+  }
+}
+```
+
+```java
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Event1Handler {
+  @EventListener
+  public void handle(Event1 event){
+    System.out.println("데이터는 " + event.getData());
+  }
+}
+```
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
+
+@Component
+public class AppRunner implements ApplicationRunner {
+  @Autowired
+  ApplicationEventPublisher publisher;
+  
+  @Override
+  public void run(ApplicationArguments args) throws Exception{
+      publisher.publishEvent(new Event1(this,100));
+  }
+
+}
+```
+
+

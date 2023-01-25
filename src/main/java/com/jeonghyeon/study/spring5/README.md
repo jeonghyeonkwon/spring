@@ -896,14 +896,5 @@ public class GlobalAdvice {
 }
 ```
 
-## MessageSource
-* ApplicationContext는 MessageSource도 상속 받았다
-* 국제화 기능을 제공한다
-  * 언어별로 번역을 하여 내용을 반환한다
-    * 번역기를 돌려주는 것이 아닌 직접 다 써야된다...
-* 스프링 부트를 쓰고 있다면 파일명은 이렇게 지어야 된다
-  * messages.properties
-  * messages_ko_KR.properties
-
 ## 출처
 * [강좌 - 백기선님 스프링 MVC](https://www.inflearn.com/course/%EC%9B%B9-mvc)
