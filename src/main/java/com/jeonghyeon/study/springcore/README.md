@@ -290,3 +290,24 @@ public class AppRunner implements ApplicationRunner {
   * URL에서 읽어오기
   * 상대/절대 경로로 읽어오기
 
+## Resource 
+* 스프링 코어에서 제공하는 인터페이스
+* Resource 타입은 ApplicationContext에 따라 결정됨
+### 메소드들
+* getInputStream()
+* exits()
+* isOpen()
+* getDiscription()
+### 구현체
+* UrlResource
+  * http, https, ftp, file, jar
+* ClassPathResource
+  * 기본 점두어 classpath:/
+* FileSystemResource
+* ServletContextResource
+  * 웹 어플리케이션 루트에서 경로 찾음
+* ...
+
+### 명시적 접두어
+* classpath:/
+* file:///
