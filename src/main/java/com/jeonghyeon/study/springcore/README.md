@@ -322,3 +322,39 @@ public class AppRunner implements ApplicationRunner {
 * void validate(Object obj, Errors e)
   * 실제 검증 로직을 이 안에서 구현
     * 구현할 때 ValidationUtils
+
+## PropertyEditor
+* 웹에 특화된 기술은 아니지만 웹쪽으로 이해하자면 Mapping 받을때 "/event/{eventId}"로 요청 왔을 때 @PathVariable Event event 파라미터로 받도록 설정 가능
+* 빈으로 등록해서 쓰면 안됨
+  * 스레드-세이프 하지 않으므로 잘못 했다가는 1번회원이 2번회원 수정될 수 있다고 함
+  
+```java
+import java.beans.PropertyEditorSupport;
+
+public class EventEditor extends PropertyEditorSupport {
+  @Override
+  public String getAsText() {
+    return ((Event) getValue()).getTitle(); 
+  }
+
+  @Override
+  public void setAsText(String text) throws IllegalArgumentException {
+    setValue(new Event(Integer.parseInt(text)));
+  }
+}
+```
+
+```java
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AController {
+
+  @InitBinder
+  public void init(WebDataBinder binder){
+      binder.registerCustomEditor(Event.class, new EventEditor);
+  }
+}
+```
