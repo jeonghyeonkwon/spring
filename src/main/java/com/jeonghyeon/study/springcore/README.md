@@ -311,3 +311,14 @@ public class AppRunner implements ApplicationRunner {
 ### 명시적 접두어
 * classpath:/
 * file:///
+
+## Validation 
+* 검증용 인터페이스
+* [Valid Validated 정리](https://github.com/jeonghyeonkwon/spring-mvc/blob/main/src/main/java/com/jeonghyeon/study/spring5/README.md)
+* [@Valid 검증 관련 예제](https://github.com/jeonghyeonkwon/blog-example-project/tree/main/src/main/java/com/example/blogproject/aboutvalidate)
+### 구현 인터페이스들
+* boolean supports(Class class)
+  * 어떤 타입의 객체를 검증할 때 사용할 것인지 결정함
+* void validate(Object obj, Errors e)
+  * 실제 검증 로직을 이 안에서 구현
+    * 구현할 때 ValidationUtils

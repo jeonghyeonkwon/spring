@@ -547,7 +547,7 @@ public @interface GetHelloMapping {
 ## @Valid And @Validated
 [@Valid 검증 관련 예제](https://github.com/jeonghyeonkwon/blog-example-project/tree/main/src/main/java/com/example/blogproject/aboutvalidate)
 * Valid라는 애노테이션에는 그룹을 지정할 수 없다
-  * Validated는 그룹으로 지정 가능하다
+* Validated는 그룹으로 지정 가능하다
 
 ```java
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -567,7 +567,7 @@ class User {
 
 
 import org.springframework.validation.annotation.Validated;
-        import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @PostMapping("/user")
 public ResponseEntity register(@Validated(User.MaxUser.class) @ModelAttribute ...){
