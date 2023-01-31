@@ -327,7 +327,8 @@ public class AppRunner implements ApplicationRunner {
 * 웹에 특화된 기술은 아니지만 웹쪽으로 이해하자면 Mapping 받을때 "/event/{eventId}"로 요청 왔을 때 @PathVariable Event event 파라미터로 받도록 설정 가능
 * 빈으로 등록해서 쓰면 안됨
   * 스레드-세이프 하지 않으므로 잘못 했다가는 1번회원이 2번회원 수정될 수 있다고 함
-  
+* Object <-> String 만 변환 가능
+* DataBinder 사용
 ```java
 import java.beans.PropertyEditorSupport;
 
@@ -357,4 +358,87 @@ public class AController {
       binder.registerCustomEditor(Event.class, new EventEditor);
   }
 }
+```
+
+## Converter와 Formatter
+### Converter
+* A객체와 B객체 사이에 변환를 가능하게 해주는 것
+* PropertyEditor와 달리 스레드-세이프 하다
+
+* 컨버터 생성
+```java
+import org.springframework.core.convert.converter.Converter;
+
+public class EventConverter {
+    // A클래스를 B클래스로 변환
+  public static class AToBConverter implements Converter<AClass, BClass> {
+    @Override
+    public BClass convert(AClass source) {
+      //...
+    }
+  }
+}
+```
+* 컨버터 등록 (@Component를 컨버터에 붙일시 스프링 부트에서는 자동이다)
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(new EventConverter.AToBConverter());
+  }
+}
+```
+### Formatter
+* [mvc 포메터](https://github.com/jeonghyeonkwon/spring-mvc/blob/main/src/main/java/com/jeonghyeon/study/spring5/README.md)
+* PropertyEditor 대체제 (Object <-> String 변환)
+  * 로케일(지역)에 따라 문자 처리 가능
+  * 스레드-세이프 하다
+* 포메터 생성 
+```java
+import org.springframework.format.Formatter;
+
+import java.text.ParseException;
+import java.util.Locale;
+
+public class EventFormatter implements Formatter<AClass> {
+  @Override
+  public AClass parse(String text, Locale locale) throws ParseException {
+    //...
+  }
+
+  @Override
+  public String print(AClass object, Locale locale) {
+    //...
+  }
+}
+```
+
+* 포메터 등록 (@Component를 포메터에 붙일시 스프링 부트에서는 자동이다)
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addFormatter(new EventFormatter());
+  }
+}
+```
+### ConversionService
+* 실제 변환하는 작업이 스레드-세이프하는 이유는 이것 때문
+  * PropertyEditor는 DataBinder 사용
+
+### Test에서 Formatter, Converter
+```java
+@RunWith(SpringRunncer.class)
+@WebMvcTest({EventConverter.AToBConverter.class, EventFormatter.class,...})
+// 웹 에 필요한 컨버터나 포메터 등록 가능
 ```
