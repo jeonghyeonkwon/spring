@@ -442,3 +442,17 @@ public class WebConfig implements WebMvcConfigurer {
 @WebMvcTest({EventConverter.AToBConverter.class, EventFormatter.class,...})
 // 웹 에 필요한 컨버터나 포메터 등록 가능
 ```
+
+
+## Null-safety
+* NullPointException 방지
+
+* @NonNull
+  * ide에서 null을 주입시 경고 메시지를 준다(인텔리제이는 설정을 해야됨)
+* @Nullable
+  * ide에서 null을 주입시 경고 메시지를 준다(인텔리제이는 설정을 해야됨)
+
+* @NonNullApi(패키지 레벨 설정)
+  * 하위 패키지들에게도 적용 된다
+* @NonNullFields(패키지 레벨 설정)
+  * 하위 패키지들에게도 적용 된다
