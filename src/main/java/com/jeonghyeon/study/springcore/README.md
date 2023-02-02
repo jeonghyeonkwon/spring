@@ -456,3 +456,36 @@ public class WebConfig implements WebMvcConfigurer {
   * 하위 패키지들에게도 적용 된다
 * @NonNullFields(패키지 레벨 설정)
   * 하위 패키지들에게도 적용 된다
+
+
+## AOP
+* [만들었던 예제](https://github.com/jeonghyeonkwon/blog-example-project/blob/main/src/main/java/com/example/blogproject/aboutaop/aspect/AopAspect.java)
+### Aspect
+* 묶은 모듈
+
+### Advice
+* 해야할 일
+
+### PointCut
+* 어디에 적용하는지
+
+### Target
+* 적용이 되는 대상
+
+### JoinPoint
+* 시점 (실행할 때, 끝날 때, 접근 전, ...)
+
+
+### 적용 방법
+* 컴파일
+  * AspectJ
+* 로드 타임
+  * AspectJ
+* 런타임
+  * 가장 현실적으로 합리적인 부분
+  * 스프링 AOP
+
+### 자바에서 AOP
+* AspectJ
+  * 더 다양한 기능을 제공 
+* 스프링 AOP
