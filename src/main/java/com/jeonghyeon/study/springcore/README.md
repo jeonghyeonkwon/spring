@@ -489,3 +489,12 @@ public class WebConfig implements WebMvcConfigurer {
 * AspectJ
   * 더 다양한 기능을 제공 
 * 스프링 AOP
+
+### Spring AOP - 프록시 기반 AOP
+* 프록시 기반의 AOP
+* 스프링 빈에서만 AOP를 적용할 수 있다.
+* 인터페이스가 실제 객체를 참조하는 것이 아닌 프록시 객체를 참조하고 프록시 객체가 실제 객체를 참조하는 것
+  * 인터페이스 <-> 프록시 <-> 실제 객체
+
+#### 문제점
+* 그럼 매번 프록시 객체를 만들어야 되는건가?
