@@ -498,3 +498,24 @@ public class WebConfig implements WebMvcConfigurer {
 
 #### 문제점
 * 그럼 매번 프록시 객체를 만들어야 되는건가?
+
+### Spring AOP - @AOP
+* core 라이브러리외에 spring-boot-starter-aop도 추가 해야된다
+#### aspect
+* @Aspect
+* 빈으로 등록해야 되니 @Component도 추가
+
+
+#### 포인트 컷
+* @Pointcut
+* 주요 표현식
+  * execution
+  * @annotation
+  * bean
+* 포인트 컷 조합
+
+#### 어드바이스
+* @Before
+* @AfterReturning
+* @AfterThrowing
+* @Around
